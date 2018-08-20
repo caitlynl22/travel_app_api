@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :trip do
-    title "MyString"
-    from "2018-05-02"
-    to "2018-05-02"
-    description "MyText"
+    title { Faker::Lorem.word }
+    from { Faker::Date.backward(14) }
+    to  { Faker::Date.backward(7) }
+    description { Faker::Lorem.paragraph }
   end
 end
