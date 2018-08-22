@@ -3,6 +3,6 @@ class Location < ApplicationRecord
   has_many :trips, through: :destinations
 
   validates :country, presence: true
-  validates :country, inclusion: { in: Country.all, message: "Please choose a valid country." }
+  validates :country, inclusion: { in: Country.all_translated, message: "Please choose a valid country." }
 
 end
