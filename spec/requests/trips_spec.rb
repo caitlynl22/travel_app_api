@@ -77,12 +77,27 @@ RSpec.describe 'Trips API', type: :request do
 
     before { patch "/trips/#{trip_id}", params: valid_attributes }
 
-    it 'updates the record' do
-      expect(response.body).to be_empty
+    context 'when the trip exists' do
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+
+      it 'updates the trip' do
+        updated_trip = Trip.find(trip_id)
+        expect(updated_trip.title).to eq('Italy')
+      end
     end
 
-    it 'returns status code 204' do
-      expect(response).to have_http_status(204)
+    context 'when the trip does not exist' do
+      let(:trip_id) { 0 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find Trip/)
+      end
     end
   end
 
