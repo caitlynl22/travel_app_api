@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Trips API', type: :request do
   let!(:trips) { create_list(:trip, 10) }
   let(:trip_id) { trips.first.id }
+  let(:user) { create(:user) }
 
   describe 'GET /trips' do
     before { get '/trips' }
@@ -45,7 +46,7 @@ RSpec.describe 'Trips API', type: :request do
   end
 
   describe 'POST /trips' do
-    let(:valid_attributes) { { title: 'Nepal 2018', from: '2018-10-04', to: '2018-10-20', description: 'Hiking the Everest base camp trail.' } }
+    let(:valid_attributes) { { title: 'Nepal 2018', from: '2018-10-04', to: '2018-10-20', description: 'Hiking the Everest base camp trail.', user_id: user.id } }
 
     context 'when the request is valid' do
       before { post '/trips', params: valid_attributes }
@@ -60,7 +61,7 @@ RSpec.describe 'Trips API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/trips', params: { title: 'Europe', from: '2016-04-14' } }
+      before { post '/trips', params: { title: 'Europe', from: '2016-04-14', user_id: user.id } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)

@@ -4,5 +4,6 @@ FactoryBot.define do
     from { Faker::Date.backward(14) }
     to  { Faker::Date.backward(7) }
     description { Faker::Lorem.paragraph }
+    user
   end
 end
